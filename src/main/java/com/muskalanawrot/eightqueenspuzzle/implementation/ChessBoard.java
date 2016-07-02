@@ -58,9 +58,9 @@ public class ChessBoard
 	return fit;
     }
 
-    private Integer calculateMaxFit()
+    public Integer calculateMaxFit()
     {
-	return (int) Math.pow(queensNumber - 1, 2) * 2;
+	return (int) Math.pow(queensNumber - 1, 2);
     }
 
     public int calculateFit()
@@ -118,5 +118,12 @@ public class ChessBoard
 	distinctList.removeIf(f -> secondGenotype.stream()
 			.filter(s -> s.getColumn() == f.getColumn() && s.getRow() == f.getRow()).findAny().isPresent());
 	return distinctList;
+    }
+
+    public ChessBoard getCopy()
+    {
+	List<Queen> genotypeCopy = genotype.stream().map(queen -> queen.getCopy()).collect(Collectors.toList());
+
+	return new ChessBoard(getRowsNumber(), getColumnsNumber(), genotypeCopy);
     }
 }

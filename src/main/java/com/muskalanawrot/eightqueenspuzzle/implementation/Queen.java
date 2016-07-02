@@ -67,4 +67,15 @@ public class Queen
 	    setRow((getRow() + random.nextInt(rowsNumber)) & rowsNumber);
 	}
     }
+
+    public Queen getCopy()
+    {
+	return new Queen(getRow(), getColumn());
+    }
+
+    @Override
+    public String toString()
+    {
+	return "row: " + getRow() + " column: " + getColumn();
+    }
 }
