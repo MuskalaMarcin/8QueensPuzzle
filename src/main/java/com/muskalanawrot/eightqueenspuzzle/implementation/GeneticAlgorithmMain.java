@@ -41,6 +41,7 @@ public class GeneticAlgorithmMain implements Callable<ChessBoard>
 	    System.out.println(i);
 	    if (population.isFinished())
 	    {
+		System.out.println(population.getBestChessBoard().getFit());
 		return population.getBestChessBoard();
 	    }
 	    else
@@ -48,8 +49,8 @@ public class GeneticAlgorithmMain implements Callable<ChessBoard>
 		population = generateNewPopulation(population);
 	    }
 	}
-
-	return null;
+	System.out.println(population.getBestChessBoard().getFit());
+	return population.getBestChessBoard();
     }
 
     private Population generateNewPopulation(Population oldPopulation)

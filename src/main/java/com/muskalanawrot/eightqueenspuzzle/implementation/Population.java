@@ -38,8 +38,23 @@ public class Population
 
     private ChessBoard getRandomObject(List<ChessBoard> chessBoardList)
     {
-	/*int index;
-	double fitSum = chessBoardList.stream().mapToDouble(ChessBoard::getFit).sum();
+	double maxFit = chessBoardList.stream().mapToDouble(ChessBoard::getFit).max().getAsDouble();
+	int i = 0;
+	int maxIndex = chessBoardList.size() - 1;
+	int index;
+	while (i < 1000)
+	{
+	    index = (int) Math.round(maxIndex * random.nextDouble());
+	    ChessBoard chessBoard = chessBoardList.get(index);
+
+	    if (random.nextDouble() < chessBoard.getFit() / maxFit)
+	    {
+		return chessBoard;
+	    }
+	    i++;
+	}
+	return chessBoardList.get(random.nextInt(chessBoardList.size()));
+	/*double fitSum = chessBoardList.stream().mapToDouble(ChessBoard::getFit).sum();
 
 	double value = fitSum * random.nextDouble();
 
@@ -47,14 +62,14 @@ public class Population
 	{
 	    value -= chessBoardList.get(i).getFit();
 	    if (value <= 0) return chessBoardList.get(i);
-	}*/
+	}
 
-	return chessBoardList.get(random.nextInt(chessBoardList.size()));
+	return chessBoardList.get(random.nextInt(chessBoardList.size()));*/
     }
 
     public void sortPopulation()
     {
-	objectsList.sort((x, y) -> x.getFit().compareTo(y.getFit()));
+	objectsList.sort((y, x) -> x.getFit().compareTo(y.getFit()));
     }
 
     public List<ChessBoard> performSelection(float selectionPercent)
@@ -68,16 +83,14 @@ public class Population
 
     public List<ChessBoard> getChildrens(float crossoverPercent)
     {
-	int numberOfCrossovers = Math.round(crossoverPercent * populationSize / 200);
+	int numberOfCrossovers = Math.round(crossoverPercent * populationSize / 100);
 	List<ChessBoard> chessBoardList = new LinkedList<>(objectsList);
 	List<ChessBoard> childrenList = new LinkedList<>();
 
 	for (int i = 0; i < numberOfCrossovers; i++)
 	{
 	    ChessBoard firstBoard = getRandomObject(chessBoardList);
-	    chessBoardList.remove(firstBoard);
 	    ChessBoard secondBoard = getRandomObject(chessBoardList);
-	    chessBoardList.remove(secondBoard);
 
 	    childrenList.add(ChessBoard.crossover(firstBoard, secondBoard));
 	}
@@ -86,8 +99,9 @@ public class Population
 
     public void mutatePopulation(float mutationPercent, double mutationRate)
     {
-	int minMutationIndex = populationSize - Math.round(populationSize * mutationPercent);
-
+	int minMutationIndex = populationSize - Math.round(populationSize * mutationPercent / 100);
+	System.out.println(minMutationIndex);
+	sortPopulation();
 	objectsList.subList(minMutationIndex, populationSize).forEach(board -> {
 	    if ((random.nextDouble() * 100d) < mutationRate) board.mutate();
 	});

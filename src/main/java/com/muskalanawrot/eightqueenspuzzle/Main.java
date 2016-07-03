@@ -3,7 +3,6 @@ package com.muskalanawrot.eightqueenspuzzle;
 import com.muskalanawrot.eightqueenspuzzle.implementation.ChessBoard;
 import com.muskalanawrot.eightqueenspuzzle.implementation.GeneticAlgorithmMain;
 
-import java.sql.Time;
 import java.util.concurrent.*;
 
 /**
@@ -13,14 +12,14 @@ public class Main
 {
     public static void main(String args[])
     {
-	int populationSize = 100;
+	int populationSize = 1000;
 	int columnsNumber = 8;
 	int rowsNumber = 8;
 	int queensNumber = 8;
-	int maxGenNumber = 400;
-	float mutationPercent = 20f;
-	float mutationRate = 2.5f;
-	float crossoverPercent = 40f;
+	int maxGenNumber = 600;
+	float mutationPercent = 90f;
+	float mutationRate = 10f;
+	float crossoverPercent = 50f;
 
 	GeneticAlgorithmMain geneticAlgorithmMain = new GeneticAlgorithmMain(populationSize, columnsNumber, rowsNumber,
 			queensNumber, maxGenNumber, mutationPercent, mutationRate, crossoverPercent);
@@ -29,6 +28,7 @@ public class Main
 
 	try
 	{
+	    executorService.shutdown();
 	    executorService.awaitTermination(1000, TimeUnit.DAYS);
 	    ChessBoard chessBoard = finishedBoard.get();
 	    chessBoard.getGenotype().forEach(f -> System.out.println(f));
@@ -37,6 +37,5 @@ public class Main
 	{
 	    e.printStackTrace();
 	}
-
     }
 }

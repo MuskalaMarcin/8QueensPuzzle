@@ -25,7 +25,7 @@ public class ChessBoard
 	this.queensNumber = genotype.size();
 	this.genotype = genotype;
 	this.random = new Random();
-	this.fit = calculateFit();
+	calculateFit();
     }
 
     public ChessBoard(int rowsNumber, int columnsNumber, int queensNumber)
@@ -60,20 +60,18 @@ public class ChessBoard
 
     public Integer calculateMaxFit()
     {
-	return (int) Math.pow(queensNumber - 1, 2);
+	return queensNumber * (queensNumber - 1);
     }
 
-    public int calculateFit()
+    private void calculateFit()
     {
-	int maxFit = calculateMaxFit();
-
-	return (maxFit + genotype.stream().mapToInt(i -> i.getNumberOfCollisions(genotype)).sum()) % (maxFit + 1);
+	this.fit = calculateMaxFit() - genotype.stream().mapToInt(i -> i.getNumberOfCollisions(genotype)).sum();
     }
 
     public void mutate()
     {
 	genotype.get(random.nextInt(queensNumber)).mutate(rowsNumber, columnsNumber, random);
-	fit = calculateFit();
+	calculateFit();
     }
 
     public boolean isFinished()

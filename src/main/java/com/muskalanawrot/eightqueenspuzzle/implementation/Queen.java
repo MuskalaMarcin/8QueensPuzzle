@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Created by Marcin on 02.07.2016.
+ * Class representing one queen from chess board.
  */
 public class Queen
 {
@@ -37,6 +37,12 @@ public class Queen
 	this.column = column;
     }
 
+    /**
+     * Returns number of collisions with other queens from list.
+     *
+     * @param queenList list of {@link Queen} on the chess board
+     * @return number of collisions
+     */
     public int getNumberOfCollisions(List<Queen> queenList)
     {
 	return (int) queenList.stream().filter(anotherQueen -> {
@@ -56,18 +62,30 @@ public class Queen
 	}).count();
     }
 
+    /**
+     * Mutates this object by adding one to row or column number within specified boundaries.
+     *
+     * @param rowsNumber    max row number
+     * @param columnsNumber max column number
+     * @param random        {@link Random} random generator
+     */
     public void mutate(int rowsNumber, int columnsNumber, Random random)
     {
 	if (random.nextBoolean())
 	{
-	    setColumn((getColumn() + random.nextInt(columnsNumber)) % columnsNumber);
+	    setColumn((getColumn() + 1) % columnsNumber);
 	}
 	else
 	{
-	    setRow((getRow() + random.nextInt(rowsNumber)) & rowsNumber);
+	    setRow((getRow() + 1) % rowsNumber);
 	}
     }
 
+    /**
+     * Returns copy of this object.
+     *
+     * @return Queen copy of this
+     */
     public Queen getCopy()
     {
 	return new Queen(getRow(), getColumn());
@@ -76,6 +94,6 @@ public class Queen
     @Override
     public String toString()
     {
-	return "row: " + getRow() + " column: " + getColumn();
+	return "row: " + (getRow() + 1) + " column: " + (char) ('A' + getColumn());
     }
 }
