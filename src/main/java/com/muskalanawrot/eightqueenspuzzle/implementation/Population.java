@@ -108,6 +108,13 @@ public class Population
 	    ChessBoard firstBoard = getRandomObject(chessBoardList);
 	    ChessBoard secondBoard = getRandomObject(chessBoardList);
 
+	    int counter = 0;
+	    while (secondBoard.equals(firstBoard) && counter < 1000)
+	    {
+		secondBoard = getRandomObject(chessBoardList);
+		counter++;
+	    }
+
 	    childrenList.add(ChessBoard.crossover(firstBoard, secondBoard));
 	}
 	return childrenList;
