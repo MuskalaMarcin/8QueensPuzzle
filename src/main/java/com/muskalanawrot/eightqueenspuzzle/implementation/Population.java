@@ -71,7 +71,7 @@ public class Population
 	return chessBoardList.get(random.nextInt(chessBoardList.size()));
     }
 
-    public void sortPopulation()
+    private void sortPopulation()
     {
 	objectsList.sort((y, x) -> x.getFit().compareTo(y.getFit()));
     }
