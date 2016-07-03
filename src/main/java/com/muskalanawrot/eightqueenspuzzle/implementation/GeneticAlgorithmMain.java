@@ -1,5 +1,9 @@
 package com.muskalanawrot.eightqueenspuzzle.implementation;
 
+import com.muskalanawrot.eightqueenspuzzle.gui.MainController;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -17,6 +21,7 @@ public class GeneticAlgorithmMain implements Callable<ChessBoard>
     private Float crossoverPercent;
     private Float mutationPercent;
     private Double mutationRate;
+    private MainController mainController;
 
     /**
      * Constructor for main genetic algorithm class.
@@ -29,9 +34,11 @@ public class GeneticAlgorithmMain implements Callable<ChessBoard>
      * @param mutationPercent  percentage of objects from population to undergo mutation
      * @param mutationRate     chances for object to mutate
      * @param crossoverPercent percentage of objects in next population that will be created by crossover
+     * @param mainController   reference to main controller
      */
     public GeneticAlgorithmMain(Integer populationSize, Integer columnsNumber, Integer rowsNumber, Integer queensNumber,
-		    Integer maxGenNumber, Float mutationPercent, Double mutationRate, Float crossoverPercent)
+		    Integer maxGenNumber, Float mutationPercent, Double mutationRate, Float crossoverPercent,
+		    MainController mainController)
     {
 	this.populationSize = populationSize;
 	this.columnsNumber = columnsNumber;
@@ -41,6 +48,7 @@ public class GeneticAlgorithmMain implements Callable<ChessBoard>
 	this.crossoverPercent = crossoverPercent;
 	this.mutationPercent = mutationPercent;
 	this.mutationRate = mutationRate;
+	this.mainController = mainController;
     }
 
     /**
@@ -56,19 +64,25 @@ public class GeneticAlgorithmMain implements Callable<ChessBoard>
 
 	for (Integer i = 0; i < maxGenNumber; i++)
 	{
-	    System.out.println(i);
+	    mainController.getProgressBar().setProgress((double) i / maxGenNumber);
 	    if (population.isFinished())
 	    {
-		System.out.println(population.getBestChessBoard().getFit());
-		return population.getBestChessBoard();
+		mainController.getStatusField().setText("SUKCES");
+		mainController.setFinished();
+		return  population.getBestChessBoard();
 	    }
 	    else
 	    {
 		population = generateNewPopulation(population);
 	    }
+	    if (Thread.interrupted())
+	    {
+		return population.getBestChessBoard();
+	    }
 	}
-	System.out.println(population.getBestChessBoard().getFit());
-	return population.getBestChessBoard();
+	mainController.getStatusField().setText("BRAK OPTYMALNEGO");
+	mainController.setFinished();
+	return  population.getBestChessBoard();
     }
 
     /**

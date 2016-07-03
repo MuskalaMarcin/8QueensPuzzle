@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<Pane fx:id="mainPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="365.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.muskalanawrot.eightqueenspuzzle.gui.MainController">
+    <children>
+        <Slider fx:id="crossoverPercent" layoutX="202.0" layoutY="64.0" />
+        <Slider fx:id="mutationPercent" layoutX="202.0" layoutY="105.0" />
+        <ProgressBar fx:id="progressBar" layoutX="72.0" layoutY="471.0" prefWidth="200.0" progress="0.0" />
+        <Button fx:id="startButton" layoutX="80.0" layoutY="505.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="66.0" text="Start" />
+        <Label layoutX="22.0" layoutY="14.0" text="Ustawienia algorytmu" />
+        <Separator layoutX="0.0" layoutY="426.0" prefHeight="14.0" prefWidth="365.0" />
+        <Button fx:id="resultButton" layoutX="198.0" layoutY="505.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="66.0" text="Wynik" />
+        <Separator layoutY="255.0" prefHeight="0.0" prefWidth="365.0" />
+        <Label layoutX="22.0" layoutY="266.0" text="Ustawienia zadania" />
+        <TextField fx:id="columnsNumber" alignment="CENTER" layoutX="202.0" layoutY="311.0" text="8" />
+        <TextField fx:id="rowsNumber" alignment="CENTER" layoutX="202.0" layoutY="354.0" text="8" />
+        <TextField fx:id="queensNumber" alignment="CENTER" layoutX="202.0" layoutY="394.0" text="8" />
+
+        <TextField fx:id="statusField" editable="false" layoutX="98.0" layoutY="554.0" />
+        <Label layoutX="22.0" layoutY="442.0" text="Status" />
+        <TextField fx:id="mutationRate" alignment="CENTER" layoutX="198.0" layoutY="143.0" text="7.5" />
+        <TextField fx:id="maxGenNumber" alignment="CENTER" layoutX="198.0" layoutY="182.0" text="500" />
+        <TextField fx:id="populationSize" alignment="CENTER" layoutX="198.0" layoutY="219.0" text="1000" />
+        <Label layoutX="14.0" layoutY="62.0" text="Procent krzyżowania" />
+        <Label layoutX="14.0" layoutY="103.0" text="Procent mutacji" />
+        <Label layoutX="14.0" layoutY="147.0" text="Prawdopodobieństwo mutacji" />
+        <Label layoutX="14.0" layoutY="186.0" text="Maksymalna ilość pokoleń" />
+        <Label layoutX="14.0" layoutY="223.0" text="Wielkość populacji" />
+        <Label layoutX="14.0" layoutY="315.0" text="Ilość kolumn" />
+        <Label layoutX="14.0" layoutY="358.0" text="Ilość wierszy" />
+        <Label layoutX="14.0" layoutY="398.0" text="Ilość hetmanów" />
+    </children>
+</Pane>

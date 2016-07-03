@@ -2,18 +2,19 @@ package com.muskalanawrot.eightqueenspuzzle;
 
 import com.muskalanawrot.eightqueenspuzzle.implementation.ChessBoard;
 import com.muskalanawrot.eightqueenspuzzle.implementation.GeneticAlgorithmMain;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.util.concurrent.*;
 
 /**
  * Created by Marcin on 02.07.2016.
  */
-public class Main
+public class Main extends Application
 {
-    /*
-    public class Main extends Application
-{
-
     public static void main(String[] args)
     {
 	launch(args);
@@ -22,13 +23,14 @@ public class Main
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("main.fxml"));
+        primaryStage.setTitle("Problem 8 hetmanów - Muskała, Nawrot");
+        primaryStage.setScene(new Scene(root, 365, 600));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
-}
-     */
+
+    /*
     public static void main(String args[])
     {
 	Integer populationSize = 1000;
@@ -56,5 +58,5 @@ public class Main
 	{
 	    e.printStackTrace();
 	}
-    }
+    }*/
 }

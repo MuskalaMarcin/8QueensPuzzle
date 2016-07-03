@@ -1,4 +1,4 @@
-package com.muskalanawrot.eightqueenpuzzle.test;
+package com.muskalanawrot.eightqueenspuzzle.test;
 
 import com.muskalanawrot.eightqueenspuzzle.implementation.ChessBoard;
 import com.muskalanawrot.eightqueenspuzzle.implementation.Queen;
