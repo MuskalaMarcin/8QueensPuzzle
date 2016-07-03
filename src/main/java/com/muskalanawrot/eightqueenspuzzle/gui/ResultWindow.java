@@ -113,7 +113,7 @@ public class ResultWindow extends Scene
 			gridPane.getChildren().add(innerPane);
 		    }
 		    else if (chessBoard.getGenotype().stream().filter(g -> g.getColumn().intValue() + 1 == columnFinal
-				    && g.getRow().intValue() + 1 == rowFinal).findAny().isPresent())
+				    && rowsNumber - g.getRow().intValue() - 1 == rowFinal).findAny().isPresent())
 		    {
 			javafx.scene.image.Image image = new Image("queen.png");
 			ImageView imageView = new ImageView(image);
