@@ -149,7 +149,7 @@ public class MainController implements Initializable
 	try
 	{
 	    Integer value = Integer.parseInt(textField.getText());
-	    if (value < 0) throw new NumberFormatException();
+	    if (value < 1) throw new NumberFormatException();
 	    return value;
 	}
 	catch (NumberFormatException e)
