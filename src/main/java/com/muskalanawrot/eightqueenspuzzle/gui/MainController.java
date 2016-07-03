@@ -7,14 +7,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.net.URL;
-import java.text.ParseException;
 import java.util.ResourceBundle;
 import java.util.concurrent.*;
 
 /**
- * Created by Marcin Muskala on 27.06.2016.
+ * Controller class for main application window.
  */
 public class MainController implements Initializable
 {
@@ -52,6 +52,8 @@ public class MainController implements Initializable
     private ExecutorService executorService;
     private Future<ChessBoard> chessBoardFuture;
     private ChessBoard chessBoard;
+    private int rowsNumberValue;
+    private int columnsNumberValue;
 
     public void setFinished()
     {
@@ -138,7 +140,8 @@ public class MainController implements Initializable
 
     private void handleResultButton()
     {
-	chessBoard.getGenotype().forEach(f -> System.out.println(f));
+	ResultWindow resultWindow = new ResultWindow(chessBoard, rowsNumberValue, columnsNumberValue);
+	resultWindow.showWindow();
     }
 
     private Integer getIntegerFromTextField(String message, TextField textField) throws UnsupportedOperationException
@@ -234,6 +237,8 @@ public class MainController implements Initializable
 	    GeneticAlgorithmMain geneticAlgorithmMain = new GeneticAlgorithmMain(populationSizeV, columnsNumberV,
 			    rowsNumberV, queensNumberV, maxGenNumberV, mutationPercentV, mutationRateV,
 			    crossoverPercentV, this);
+	    columnsNumberValue = columnsNumberV;
+	    rowsNumberValue = rowsNumberV;
 	    chessBoardFuture = executorService.submit(geneticAlgorithmMain);
 
 	    resultButton.setDisable(true);
