@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Marcin on 03.07.2016.
+ * Test class for queen factory class
  */
 public class QueenFactoryTest
 {

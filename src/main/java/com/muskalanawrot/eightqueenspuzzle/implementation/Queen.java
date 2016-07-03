@@ -8,31 +8,31 @@ import java.util.Random;
  */
 public class Queen
 {
-    private int row;
-    private int column;
+    private Integer row;
+    private Integer column;
 
-    public Queen(int row, int column)
+    public Queen(Integer row, Integer column)
     {
 	this.row = row;
 	this.column = column;
     }
 
-    public int getRow()
+    public Integer getRow()
     {
 	return row;
     }
 
-    private void setRow(int row)
+    private void setRow(Integer row)
     {
 	this.row = row;
     }
 
-    public int getColumn()
+    public Integer getColumn()
     {
 	return column;
     }
 
-    private void setColumn(int column)
+    private void setColumn(Integer column)
     {
 	this.column = column;
     }
@@ -43,7 +43,7 @@ public class Queen
      * @param queenList list of {@link Queen} on the chess board
      * @return number of collisions
      */
-    public int getNumberOfCollisions(List<Queen> queenList)
+    public Integer getNumberOfCollisions(List<Queen> queenList)
     {
 	return (int) queenList.stream().filter(anotherQueen -> {
 	    if (anotherQueen.equals(this))
@@ -69,7 +69,7 @@ public class Queen
      * @param columnsNumber max column number
      * @param random        {@link Random} random generator
      */
-    public void mutate(int rowsNumber, int columnsNumber, Random random)
+    public void mutate(Integer rowsNumber, Integer columnsNumber, Random random)
     {
 	if (random.nextBoolean())
 	{

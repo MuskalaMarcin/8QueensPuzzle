@@ -12,14 +12,14 @@ public class Main
 {
     public static void main(String args[])
     {
-	int populationSize = 1000;
-	int columnsNumber = 8;
-	int rowsNumber = 8;
-	int queensNumber = 8;
-	int maxGenNumber = 600;
-	float mutationPercent = 90f;
-	float mutationRate = 10f;
-	float crossoverPercent = 50f;
+	Integer populationSize = 1000;
+	Integer columnsNumber = 8;
+	Integer rowsNumber = 8;
+	Integer queensNumber = 8;
+	Integer maxGenNumber = 600;
+	Float  mutationPercent = 90f;
+	Double  mutationRate = 10d;
+	Float  crossoverPercent = 50f;
 
 	GeneticAlgorithmMain geneticAlgorithmMain = new GeneticAlgorithmMain(populationSize, columnsNumber, rowsNumber,
 			queensNumber, maxGenNumber, mutationPercent, mutationRate, crossoverPercent);

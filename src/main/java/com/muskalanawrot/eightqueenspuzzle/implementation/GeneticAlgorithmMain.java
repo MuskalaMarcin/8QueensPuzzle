@@ -5,21 +5,33 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
- * Created by Marcin on 02.07.2016.
+ * Main class for genetic algorithm.
  */
 public class GeneticAlgorithmMain implements Callable<ChessBoard>
 {
-    private int populationSize;
-    private int columnsNumber;
-    private int rowsNumber;
-    private int queensNumber;
-    private int maxGenNumber;
-    private float crossoverPercent;
-    private float mutationPercent;
-    private float mutationRate;
+    private Integer populationSize;
+    private Integer columnsNumber;
+    private Integer rowsNumber;
+    private Integer queensNumber;
+    private Integer maxGenNumber;
+    private Float crossoverPercent;
+    private Float mutationPercent;
+    private Double mutationRate;
 
-    public GeneticAlgorithmMain(int populationSize, int columnsNumber, int rowsNumber, int queensNumber,
-		    int maxGenNumber, float mutationPercent, float mutationRate, float crossoverPercent)
+    /**
+     * Constructor for main genetic algorithm class.
+     *
+     * @param populationSize   number of objects in population
+     * @param columnsNumber    number of columns on chess board
+     * @param rowsNumber       number of rows on chess board
+     * @param queensNumber     number of queens to place on chess board
+     * @param maxGenNumber     number of generation after which program will end even without solution
+     * @param mutationPercent  percentage of objects from population to undergo mutation
+     * @param mutationRate     chances for object to mutate
+     * @param crossoverPercent percentage of objects in next population that will be created by crossover
+     */
+    public GeneticAlgorithmMain(Integer populationSize, Integer columnsNumber, Integer rowsNumber, Integer queensNumber,
+		    Integer maxGenNumber, Float mutationPercent, Double mutationRate, Float crossoverPercent)
     {
 	this.populationSize = populationSize;
 	this.columnsNumber = columnsNumber;
@@ -31,12 +43,18 @@ public class GeneticAlgorithmMain implements Callable<ChessBoard>
 	this.mutationRate = mutationRate;
     }
 
+    /**
+     * Main thread method, ends after selected number of generations or after finding
+     * {@link ChessBoard} that is solution to problem.
+     *
+     * @return best {@link ChessBoard} generated through this algorithm
+     */
     @Override
     public ChessBoard call()
     {
 	Population population = new Population(populationSize, columnsNumber, rowsNumber, queensNumber);
 
-	for (int i = 0; i < maxGenNumber; i++)
+	for (Integer i = 0; i < maxGenNumber; i++)
 	{
 	    System.out.println(i);
 	    if (population.isFinished())
@@ -53,6 +71,12 @@ public class GeneticAlgorithmMain implements Callable<ChessBoard>
 	return population.getBestChessBoard();
     }
 
+    /**
+     * Method generating new generation based on previous. Performs crossover, selection and mutation.
+     *
+     * @param oldPopulation previous {@link Population}
+     * @return new {@link Population} with next generation
+     */
     private Population generateNewPopulation(Population oldPopulation)
     {
 	List<ChessBoard> objectsList = new LinkedList<>();

@@ -9,12 +9,10 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
- * Created by Marcin on 03.07.2016.
+ * Test class for {@link Queen} class
  */
 public class QueenTest
 {
@@ -38,8 +36,8 @@ public class QueenTest
 	Random random = new Random();
 
 	//Given:
-	assertEquals("Column before mutation doesn't match expected.", QUEEN_COLUMN, queen.getColumn());
-	assertEquals("Row before mutation doesn't match expected.", QUEEN_ROW, queen.getRow());
+	assertEquals("Column before mutation doesn't match expected.", QUEEN_COLUMN, queen.getColumn().intValue());
+	assertEquals("Row before mutation doesn't match expected.", QUEEN_ROW, queen.getRow().intValue());
 
 	//When:
 	queen.mutate(MAX_ROW_NUMBER, MAX_COLUMN_NUMBER, random);
@@ -69,13 +67,13 @@ public class QueenTest
 			.collect(Collectors.toList());
 
 	assertEquals("Number of horizontal or vertical collisions doesn't match expected. ", 4,
-			queen.getNumberOfCollisions(queenList));
+			queen.getNumberOfCollisions(queenList).intValue());
 
 	// cross collision
 	queenList = Stream.of(new Queen(1, 1), new Queen(3, 3), new Queen(3, 1), new Queen(1, 3))
 			.collect(Collectors.toList());
 	assertEquals("Number of cross collisions doesn't match expected. ", 4,
-			queen.getNumberOfCollisions(queenList));
+			queen.getNumberOfCollisions(queenList).intValue());
 
 	// one collumn collision
 	queenList = Stream.of(new Queen(2, 5), new Queen(2, 3), new Queen(2, 1), new Queen(2, 4), new Queen(2, 8),
@@ -83,13 +81,14 @@ public class QueenTest
 	for (Queen q : queenList)
 	{
 	    assertEquals("Number of one collumn collisions doesn't match expected. ", 7,
-			    q.getNumberOfCollisions(queenList));
+			    q.getNumberOfCollisions(queenList).intValue());
 	}
 
 	// no collision
 	queenList = Stream.of(new Queen(7, 3), new Queen(5, 4), new Queen(0, 1), new Queen(1, 7))
 			.collect(Collectors.toList());
-	assertEquals("Number of collisions doesn't match expected. ", 0, queen.getNumberOfCollisions(queenList));
+	assertEquals("Number of collisions doesn't match expected. ", 0,
+			queen.getNumberOfCollisions(queenList).intValue());
     }
 
     @Test

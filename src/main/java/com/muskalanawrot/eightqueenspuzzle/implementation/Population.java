@@ -7,15 +7,15 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Created by Marcin on 02.07.2016.
+ * Class representing one generation/population from genetic algorithm.
  */
 public class Population
 {
     private List<ChessBoard> objectsList;
-    private int populationSize;
+    private Integer populationSize;
     private Random random;
 
-    public Population(int populationSize, int columnsNumber, int rowsNumber, int queensNumber)
+    public Population(Integer populationSize, Integer columnsNumber, Integer rowsNumber, Integer queensNumber)
     {
 	this(generatePopulation(rowsNumber, columnsNumber, queensNumber, populationSize));
     }
@@ -28,20 +28,35 @@ public class Population
 	sortPopulation();
     }
 
-    private static List<ChessBoard> generatePopulation(int rowsNumber, int columnsNumber, int queensNumber,
-		    int populationSize)
+    /**
+     * Method generating new random population.
+     *
+     * @param rowsNumber     max number of rows
+     * @param columnsNumber  max number of columns
+     * @param queensNumber   number of queens in single genotype
+     * @param populationSize size of population
+     * @return list of {@link ChessBoard} population
+     */
+    private static List<ChessBoard> generatePopulation(Integer rowsNumber, Integer columnsNumber, Integer queensNumber,
+		    Integer populationSize)
     {
 	return IntStream.range(0, populationSize).boxed().parallel()
 			.map(m -> new ChessBoard(rowsNumber, columnsNumber, queensNumber)).collect(
 					Collectors.toList());
     }
 
+    /**
+     * Method returning random object from population by performing stochastic roulette wheel selection.
+     *
+     * @param chessBoardList all {@link ChessBoard} to choose
+     * @return random {@link ChessBoard}
+     */
     private ChessBoard getRandomObject(List<ChessBoard> chessBoardList)
     {
-	double maxFit = chessBoardList.stream().mapToDouble(ChessBoard::getFit).max().getAsDouble();
-	int i = 0;
-	int maxIndex = chessBoardList.size() - 1;
-	int index;
+	Double maxFit = chessBoardList.stream().mapToDouble(ChessBoard::getFit).max().getAsDouble();
+	Integer i = 0;
+	Integer maxIndex = chessBoardList.size() - 1;
+	Integer index;
 	while (i < 1000)
 	{
 	    index = (int) Math.round(maxIndex * random.nextDouble());
@@ -54,17 +69,6 @@ public class Population
 	    i++;
 	}
 	return chessBoardList.get(random.nextInt(chessBoardList.size()));
-	/*double fitSum = chessBoardList.stream().mapToDouble(ChessBoard::getFit).sum();
-
-	double value = fitSum * random.nextDouble();
-
-	for (int i = 0; i < chessBoardList.size(); i++)
-	{
-	    value -= chessBoardList.get(i).getFit();
-	    if (value <= 0) return chessBoardList.get(i);
-	}
-
-	return chessBoardList.get(random.nextInt(chessBoardList.size()));*/
     }
 
     public void sortPopulation()
@@ -72,22 +76,34 @@ public class Population
 	objectsList.sort((y, x) -> x.getFit().compareTo(y.getFit()));
     }
 
-    public List<ChessBoard> performSelection(float selectionPercent)
+    /**
+     * Method performing selection on population, leaving worst ones behind.
+     *
+     * @param selectionPercent percentage of object to be passed to next population
+     * @return copy of best {@link ChessBoard} objects
+     */
+    public List<ChessBoard> performSelection(Float selectionPercent)
     {
-	int selectionNumber = Math.round(selectionPercent * populationSize / 100);
+	Integer selectionNumber = Math.round(selectionPercent * populationSize / 100);
 
 	sortPopulation();
 	return objectsList.subList(0, populationSize - selectionNumber).stream().map(chessBoard -> chessBoard.getCopy())
 			.collect(Collectors.toList());
     }
 
-    public List<ChessBoard> getChildrens(float crossoverPercent)
+    /**
+     * Method returning list of childrens.
+     *
+     * @param crossoverPercent percentage of population that will be childrens of objects from previous
+     * @return list of childrens
+     */
+    public List<ChessBoard> getChildrens(Float crossoverPercent)
     {
-	int numberOfCrossovers = Math.round(crossoverPercent * populationSize / 100);
+	Integer numberOfCrossovers = Math.round(crossoverPercent * populationSize / 100);
 	List<ChessBoard> chessBoardList = new LinkedList<>(objectsList);
 	List<ChessBoard> childrenList = new LinkedList<>();
 
-	for (int i = 0; i < numberOfCrossovers; i++)
+	for (Integer i = 0; i < numberOfCrossovers; i++)
 	{
 	    ChessBoard firstBoard = getRandomObject(chessBoardList);
 	    ChessBoard secondBoard = getRandomObject(chessBoardList);
@@ -97,10 +113,16 @@ public class Population
 	return childrenList;
     }
 
-    public void mutatePopulation(float mutationPercent, double mutationRate)
+    /**
+     * Method performing mutations in population.
+     *
+     * @param mutationPercent percentage of objects to take part in mutation (starting from the worst ones)
+     * @param mutationRate    chance rate of single mutation
+     */
+    public void mutatePopulation(Float mutationPercent, Double mutationRate)
     {
-	int minMutationIndex = populationSize - Math.round(populationSize * mutationPercent / 100);
-	System.out.println(minMutationIndex);
+	Integer minMutationIndex = populationSize - Math.round(populationSize * mutationPercent / 100);
+
 	sortPopulation();
 	objectsList.subList(minMutationIndex, populationSize).forEach(board -> {
 	    if ((random.nextDouble() * 100d) < mutationRate) board.mutate();
@@ -108,12 +130,22 @@ public class Population
 	sortPopulation();
     }
 
+    /**
+     * Method returning {@link ChessBoard} object with biggest fit value from population.
+     *
+     * @return best {@link ChessBoard}
+     */
     public ChessBoard getBestChessBoard()
     {
 	sortPopulation();
 	return objectsList.get(0);
     }
 
+    /**
+     * Method checking if any of objects in population passed exit conditions.
+     *
+     * @return true if finished
+     */
     public boolean isFinished()
     {
 	return objectsList.stream().filter(p -> p.isFinished()).findAny().isPresent();

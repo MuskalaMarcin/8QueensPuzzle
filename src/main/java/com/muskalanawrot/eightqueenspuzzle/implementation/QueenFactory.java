@@ -23,7 +23,7 @@ public class QueenFactory
      * @param columnsNumber max number of column
      * @return new {@link Queen} object
      */
-    public static Queen getNewQueen(int rowsNumber, int columnsNumber)
+    public static Queen getNewQueen(Integer rowsNumber, Integer columnsNumber)
     {
 	return new Queen(random.nextInt(rowsNumber), random.nextInt(columnsNumber));
     }
